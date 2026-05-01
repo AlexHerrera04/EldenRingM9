@@ -1,0 +1,67 @@
+@model IEnumerable<EldenRingMVC.Models.Boss>
+@{
+    ViewData["Title"] = "Bosses";
+}
+
+<div class="container section-elden">
+    <div class="section-header">
+        <p class="ornament" aria-hidden="true">⊕</p>
+        <h1>Bosses de les Terres Entremig</h1>
+        <p class="text-muted-elden" style="font-style:italic; margin-top:0.5rem;">
+            Ordenats per dificultat — del més temible al menys
+        </p>
+        <div class="mt-3 d-flex gap-2 justify-content-center flex-wrap">
+            <a asp-action="Ranking" class="btn-elden" style="font-size:0.75rem;">Ver Rànquing</a>
+            <a asp-action="ApiData" class="btn-elden" style="font-size:0.75rem;">Dades API en Viu</a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var boss in Model)
+        {
+            <div class="col-md-6 col-lg-4 fade-in">
+                <article class="card-elden" aria-label="Boss @boss.Name, dificultat @boss.Difficulty de 10">
+                    @if (!string.IsNullOrEmpty(boss.ImageUrl))
+                    {
+                        <img src="@boss.ImageUrl"
+                             alt="Il·lustració del boss @boss.Name"
+                             class="boss-image"
+                             loading="lazy"
+                             onerror="this.style.display='none'" />
+                    }
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <p class="card-subtitle" style="margin:0">@boss.Title</p>
+                            <span class="badge-elden @(boss.IsOptional ? "badge-optional" : "badge-required")"
+                                  aria-label="@(boss.IsOptional ? "Boss opcional" : "Boss obligatori")">
+                                @(boss.IsOptional ? "Opcional" : "Obligatori")
+                            </span>
+                        </div>
+                        <h2 class="card-title" style="font-size:1rem;">@boss.Name</h2>
+
+                        <div class="difficulty-bar mt-2"
+                             role="meter" aria-valuenow="@boss.Difficulty"
+                             aria-valuemin="0" aria-valuemax="10"
+                             aria-label="Dificultat @boss.Difficulty de 10">
+                            <div class="difficulty-bg">
+                                <div class="difficulty-fill"
+                                     data-width="@(boss.Difficulty * 10)"
+                                     style="width:0%"></div>
+                            </div>
+                            <span class="difficulty-label">@boss.Difficulty<small>/10</small></span>
+                        </div>
+
+                        <p class="card-text mt-2" style="font-size:0.88rem; color:var(--text-muted)">
+                            📍 @boss.Location
+                        </p>
+
+                        <a asp-action="Details" asp-route-id="@boss.Id"
+                           class="btn-elden" style="margin-top:1rem; display:inline-block; font-size:0.72rem;">
+                            Llegir més →
+                        </a>
+                    </div>
+                </article>
+            </div>
+        }
+    </div>
+</div>

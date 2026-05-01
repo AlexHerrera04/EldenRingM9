@@ -1,0 +1,46 @@
+@model IEnumerable<EldenRingMVC.Models.LoreEntry>
+@{
+    ViewData["Title"] = "Lore — La Història";
+}
+
+<div class="container section-elden" style="max-width:800px;">
+    <div class="section-header">
+        <p class="ornament" aria-hidden="true">✦</p>
+        <h1>La Història de les Terres Entremig</h1>
+        <p class="text-muted-elden" style="font-style:italic; margin-top:0.5rem;">
+            Del temps abans de l'Erdtree fins al retorn dels Tacats
+        </p>
+        <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
+            <a asp-action="Category" asp-route-id="Age" class="btn-elden" style="font-size:0.72rem;">Èpoques</a>
+            <a asp-action="Category" asp-route-id="Faction" class="btn-elden" style="font-size:0.72rem;">Faccions</a>
+            <a asp-action="Category" asp-route-id="Character" class="btn-elden" style="font-size:0.72rem;">Personatges</a>
+        </div>
+    </div>
+
+    <div class="lore-timeline" role="list" aria-label="Cronologia del lore d'Elden Ring">
+        @foreach (var entry in Model)
+        {
+            <div class="lore-entry fade-in" role="listitem">
+                <p class="lore-era">@entry.Era</p>
+                <h2 style="font-size:1.1rem; margin-bottom:0.6rem;">
+                    <a asp-action="Details" asp-route-id="@entry.Id"
+                       style="text-decoration:none; color:inherit;">
+                        @entry.Title
+                    </a>
+                </h2>
+                <span class="badge-elden @(entry.Category == "Age" ? "badge-required" : entry.Category == "Faction" ? "badge-optional" : "badge-elden")"
+                      style="@(entry.Category == "Character" ? "background:rgba(40,60,100,0.3); color:#8090c0; border:1px solid #202050;" : "")"
+                      aria-label="Categoria: @entry.Category">
+                    @entry.Category
+                </span>
+                <p style="margin-top:0.8rem; font-size:0.95rem;">
+                    @(entry.Content.Length > 200 ? entry.Content.Substring(0, 200) + "…" : entry.Content)
+                </p>
+                <a asp-action="Details" asp-route-id="@entry.Id"
+                   class="btn-elden" style="display:inline-block; margin-top:0.8rem; font-size:0.72rem;">
+                    Llegir més →
+                </a>
+            </div>
+        }
+    </div>
+</div>

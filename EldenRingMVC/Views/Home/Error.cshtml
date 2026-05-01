@@ -1,0 +1,13 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+<div class="container section-elden text-center">
+    <h1 class="text-gold">Error</h1>
+    <p>S'ha produït un error inesperat. Torna enrere o torna a la pàgina d'inici.</p>
+    @if (Model.ShowRequestId)
+    {
+        <p><small class="text-muted-elden">Request ID: @Model.RequestId</small></p>
+    }
+    <a asp-controller="Home" asp-action="Index" class="btn-elden mt-3">Tornar a l'inici</a>
+</div>

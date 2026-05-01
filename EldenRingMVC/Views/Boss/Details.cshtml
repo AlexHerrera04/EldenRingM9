@@ -1,0 +1,95 @@
+@model EldenRingMVC.Models.Boss
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container" style="max-width: 900px; padding-top: 3rem; padding-bottom: 4rem;">
+
+    <a asp-action="Index" class="text-muted-elden"
+       style="font-family:'Cinzel',serif; font-size:0.8rem; letter-spacing:0.1em; text-decoration:none;"
+       aria-label="Tornar a la llista de bosses">
+        ← Tornar als Bosses
+    </a>
+
+    <div class="detail-header">
+        <p style="font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:0.3rem;">
+            @Model.Title
+        </p>
+        <h1>@Model.Name</h1>
+        <div class="d-flex gap-2 align-items-center mt-2 flex-wrap">
+            <span class="badge-elden @(Model.IsOptional ? "badge-optional" : "badge-required")"
+                  aria-label="@(Model.IsOptional ? "Boss opcional" : "Boss obligatori")">
+                @(Model.IsOptional ? "Opcional" : "Obligatori")
+            </span>
+            <span style="color:var(--text-muted); font-size:0.85rem;">📍 @Model.Location</span>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Imatge vertical de detall -->
+        @{
+            var detailImg = !string.IsNullOrEmpty(Model.DetailImageUrl) ? Model.DetailImageUrl : Model.ImageUrl;
+        }
+        @if (!string.IsNullOrEmpty(detailImg))
+        {
+            <div class="col-md-5 text-center">
+                <img src="@detailImg"
+                     alt="Imatge oficial del boss @Model.Name"
+                     style="max-width:100%; max-height:550px; object-fit:contain; border-radius:4px; border:1px solid var(--dark-border); background:var(--dark-card);"
+                     loading="eager" />
+            </div>
+        }
+
+        <!-- Stats -->
+        <div class="@(!string.IsNullOrEmpty(detailImg) ? "col-md-7" : "col-12")">
+            <h2 style="font-size:1rem; margin-bottom:1.2rem; border-bottom:1px solid var(--dark-border); padding-bottom:0.5rem;">
+                Estadístiques
+            </h2>
+            <dl>
+                <div class="detail-stat">
+                    <dt class="detail-stat-label">Dificultat</dt>
+                    <dd>
+                        <div class="difficulty-bar" role="meter"
+                             aria-valuenow="@Model.Difficulty" aria-valuemin="0" aria-valuemax="10"
+                             aria-label="Dificultat @Model.Difficulty de 10" style="max-width:280px;">
+                            <div class="difficulty-bg">
+                                <div class="difficulty-fill"
+                                     data-width="@(Model.Difficulty * 10)"
+                                     style="width:0%"></div>
+                            </div>
+                            <span class="difficulty-label">@Model.Difficulty/10</span>
+                        </div>
+                    </dd>
+                </div>
+                <div class="detail-stat">
+                    <dt class="detail-stat-label">Punts de vida</dt>
+                    <dd class="detail-stat-value">@Model.Health.ToString("N0") HP</dd>
+                </div>
+                <div class="detail-stat">
+                    <dt class="detail-stat-label">Ubicació</dt>
+                    <dd class="detail-stat-value">@Model.Location</dd>
+                </div>
+                <div class="detail-stat">
+                    <dt class="detail-stat-label">Drops</dt>
+                    <dd class="detail-stat-value">@Model.Drops</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    <section aria-labelledby="desc-title" style="margin-top:2.5rem;">
+        <h2 id="desc-title" style="font-size:1.1rem; margin-bottom:1rem;">Descripció</h2>
+        <p>@Model.Description</p>
+    </section>
+
+    <section aria-labelledby="lore-title" style="margin-top:2rem;">
+        <h2 id="lore-title" style="font-size:1.1rem; margin-bottom:0.8rem;">Lore</h2>
+        <blockquote class="quote-block">@Model.LoreSnippet</blockquote>
+    </section>
+
+    <div class="d-flex gap-3 mt-4 flex-wrap">
+        <a asp-action="Index" class="btn-elden">← Tots els Bosses</a>
+        <a asp-action="Ranking" class="btn-elden">Veure Rànquing</a>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+@model EldenRingMVC.Models.LoreEntry
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container" style="max-width:760px; padding-top:3rem; padding-bottom:4rem;">
+    <a asp-action="Index" class="text-muted-elden"
+       style="font-family:'Cinzel',serif; font-size:0.8rem; letter-spacing:0.1em; text-decoration:none;">
+        ← Tornar al Lore
+    </a>
+
+    <div class="detail-header">
+        <p class="lore-era" style="margin-bottom:0.3rem;">@Model.Era</p>
+        <h1>@Model.Title</h1>
+        <span class="badge-elden mt-2"
+              style="@(Model.Category == "Age" ? "background:rgba(139,32,32,0.3); color:#c07070; border:1px solid #5a2020;" : Model.Category == "Faction" ? "background:rgba(107,45,107,0.3); color:#b080b0; border:1px solid #4a2050;" : "background:rgba(40,60,100,0.3); color:#8090c0; border:1px solid #202050;")"
+              aria-label="Categoria: @Model.Category">
+            @Model.Category
+        </span>
+    </div>
+
+    <article aria-label="Contingut del lore: @Model.Title">
+        @foreach (var paragraph in Model.Content.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+        {
+            <p>@paragraph</p>
+        }
+    </article>
+
+    <div class="d-flex gap-3 mt-5 flex-wrap">
+        <a asp-action="Index" class="btn-elden">← Tota la Història</a>
+        <a asp-controller="Boss" asp-action="Index" class="btn-elden">Veure Bosses</a>
+    </div>
+</div>

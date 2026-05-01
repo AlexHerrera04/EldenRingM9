@@ -1,0 +1,136 @@
+@{
+    ViewData["Title"] = "Inici";
+    var topBosses = ViewBag.TopBosses as List<EldenRingMVC.Models.Boss>;
+    var featured = ViewBag.FeaturedApiBoss as EldenRingMVC.Models.ApiBoss;
+}
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-content">
+        <div class="hero-rune" aria-hidden="true">⊕</div>
+        <h1 id="hero-title">Elden Ring</h1>
+        <p class="hero-subtitle">Les Terres Entremig t'esperen, Tarnished</p>
+        <div class="hero-divider" aria-hidden="true"></div>
+
+        @if (featured != null)
+        {
+            <div class="quote-block" style="text-align:left; max-width:520px; margin:0 auto 1.5rem;">
+                <span style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.15em; color:var(--gold-dim); text-transform:uppercase;">
+                    Boss destacat (API en viu)
+                </span>
+                <p style="margin-top:0.5rem; font-size:1rem; color:var(--text-main); font-style:normal;">
+                    <strong style="color:var(--gold);">@featured.Name</strong>
+                    @if (!string.IsNullOrEmpty(featured.Location))
+                    {
+                        <span> — @featured.Location</span>
+                    }
+                </p>
+                @if (!string.IsNullOrEmpty(featured.Description))
+                {
+                    <p style="font-size:0.88rem; margin-top:0.3rem; margin-bottom:0;">
+                        @(featured.Description.Length > 150 ? featured.Description.Substring(0, 150) + "…" : featured.Description)
+                    </p>
+                }
+                <cite>— eldenring.fanapis.com</cite>
+            </div>
+        }
+
+        <div class="d-flex gap-3 justify-content-center flex-wrap mt-4">
+            <a asp-controller="Boss" asp-action="Index" class="btn-elden btn-elden-solid">
+                Descobrir Bosses
+            </a>
+            <a asp-controller="Lore" asp-action="Index" class="btn-elden">
+                Llegir el Lore
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- TOP 3 BOSSES -->
+<section class="section-elden" aria-labelledby="top-bosses-title">
+    <div class="container">
+        <div class="section-header">
+            <p class="ornament" aria-hidden="true">✦ ✦ ✦</p>
+            <h2 id="top-bosses-title">Els Tres Més Temibles</h2>
+            <p class="text-muted-elden" style="font-style:italic; margin-top:0.5rem;">
+                Els ésers que han donat més morts als Tarnished de tot el món
+            </p>
+        </div>
+
+        @if (topBosses != null && topBosses.Any())
+        {
+            <div class="row g-4">
+                @foreach (var boss in topBosses)
+                {
+                    <div class="col-md-4 fade-in">
+                        <article class="card-elden" aria-label="Boss: @boss.Name">
+                            @if (!string.IsNullOrEmpty(boss.ImageUrl))
+                            {
+                                <img src="@boss.ImageUrl" alt="Imatge del boss @boss.Name"
+                                     class="boss-image" loading="lazy"
+                                     onerror="this.style.display='none'" />
+                            }
+                            <div class="card-body">
+                                <p class="card-subtitle">@boss.Title</p>
+                                <h3 class="card-title">@boss.Name</h3>
+                                <div class="difficulty-bar"
+                                     role="meter" aria-valuenow="@boss.Difficulty"
+                                     aria-valuemin="0" aria-valuemax="10"
+                                     aria-label="Dificultat @boss.Difficulty de 10">
+                                    <div class="difficulty-bg">
+                                        <div class="difficulty-fill"
+                                             data-width="@(boss.Difficulty * 10)"
+                                             style="width:0%"></div>
+                                    </div>
+                                    <span class="difficulty-label">@boss.Difficulty/10</span>
+                                </div>
+                                <p class="card-text" style="font-size:0.9rem; margin-top:0.8rem;">
+                                    @boss.LoreSnippet
+                                </p>
+                                <a asp-controller="Boss" asp-action="Details" asp-route-id="@boss.Id"
+                                   class="btn-elden" style="margin-top:1rem; display:inline-block; font-size:0.75rem;">
+                                    Veure detalls
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="text-center mt-5">
+            <a asp-controller="Boss" asp-action="Index" class="btn-elden">Veure tots els bosses →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section-elden"
+         style="background:rgba(201,168,76,0.02); border-top:1px solid var(--dark-border); border-bottom:1px solid var(--dark-border);"
+         aria-labelledby="intro-title">
+    <div class="container" style="max-width:760px;">
+        <div class="section-header">
+            <h2 id="intro-title">Què és Elden Ring?</h2>
+        </div>
+        <div class="fade-in">
+            <p>
+                <strong style="color:var(--gold)">Elden Ring</strong> és un videojoc d'acció i rol desenvolupat per
+                <em>FromSoftware</em> i publicat per Bandai Namco Entertainment el febrer del 2022,
+                fruit de la col·laboració entre Hidetaka Miyazaki i George R. R. Martin.
+            </p>
+            <p>
+                Ambientat a les <em>Terres Entremig</em>, el joc relata la història dels tarnished: éssers privats
+                de la Gràcia Àuria que retornen amb una missió — recollir els Grans Runes, reconstruir
+                l'Anell Elden i convertir-se en Senyor Elden.
+            </p>
+            <p>
+                El joc destaca pel seu disseny de bosses extraordinàriament exigent, el seu lore profund i
+                la seva llibertat d'exploració. Ha estat considerat un dels millors videojocs de la dècada.
+            </p>
+            <div class="text-center mt-4">
+                <a asp-controller="Lore" asp-action="Index" class="btn-elden">Explorar la Història →</a>
+            </div>
+        </div>
+    </div>
+</section>

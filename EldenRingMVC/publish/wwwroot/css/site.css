@@ -1,0 +1,585 @@
+/* ============================================
+   ELDEN RING MVC — Main Stylesheet
+   Aesthetic: Dark gothic, golden accents, aged parchment
+   Font: Cinzel (display) + EB Garamond (body)
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+/* ---------- CSS Variables ---------- */
+:root {
+  --gold:        #c9a84c;
+  --gold-light:  #e8c87a;
+  --gold-dim:    #7a6530;
+  --dark:        #0a0a0c;
+  --dark-mid:    #12100e;
+  --dark-card:   #1a1714;
+  --dark-border: #2e2820;
+  --text-main:   #d4c9b0;
+  --text-muted:  #7a7060;
+  --red-accent:  #8b2020;
+  --rot-purple:  #6b2d6b;
+  --radius:      4px;
+  --transition:  0.3s ease;
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--dark);
+  color: var(--text-main);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.7;
+  min-height: 100vh;
+  /* Subtle noise texture overlay */
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(201,168,76,0.04) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* ---------- Typography ---------- */
+h1, h2, h3, h4 {
+  font-family: 'Cinzel', 'Times New Roman', serif;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; }
+h2 { font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 600; }
+h3 { font-size: clamp(1.1rem, 2vw, 1.6rem); }
+h4 { font-size: 1.1rem; color: var(--gold-light); }
+
+p { margin-bottom: 1em; }
+
+a {
+  color: var(--gold);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+a:hover { color: var(--gold-light); text-decoration: underline; }
+
+/* Accessibility: focus visible */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: var(--radius);
+}
+
+/* ---------- Skip Link (Accessibility) ---------- */
+.skip-link {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  background: var(--gold);
+  color: var(--dark);
+  padding: 0.5rem 1rem;
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 0; }
+
+/* ---------- Navbar ---------- */
+.navbar {
+  background: linear-gradient(180deg, rgba(10,8,6,0.98) 0%, rgba(10,8,6,0.90) 100%);
+  border-bottom: 1px solid var(--dark-border);
+  padding: 0.8rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.navbar-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--gold) !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.navbar-brand:hover { color: var(--gold-light) !important; text-decoration: none; }
+
+.nav-link {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted) !important;
+  padding: 0.5rem 1rem !important;
+  transition: color var(--transition);
+}
+.nav-link:hover, .nav-link.active { color: var(--gold) !important; }
+
+.navbar-toggler { border-color: var(--gold-dim); }
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(201,168,76,0.8)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* ---------- Hero Section ---------- */
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 4rem 1rem;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(201,168,76,0.08) 0%, transparent 65%),
+    radial-gradient(ellipse at 80% 80%, rgba(139,32,32,0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #0a0a0c 0%, #14100c 50%, #0a0a0c 100%);
+  z-index: 0;
+}
+
+/* Animated golden particles */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(201,168,76,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 70%, rgba(201,168,76,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 20%, rgba(201,168,76,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 80%, rgba(201,168,76,0.25) 0%, transparent 100%),
+    radial-gradient(2px 2px at 10% 60%, rgba(201,168,76,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 50%, rgba(201,168,76,0.3) 0%, transparent 100%);
+  animation: particleFloat 8s ease-in-out infinite alternate;
+}
+
+@keyframes particleFloat {
+  from { transform: translateY(0px); opacity: 0.6; }
+  to   { transform: translateY(-12px); opacity: 1; }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.hero-rune {
+  font-size: 4rem;
+  opacity: 0.15;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px rgba(201,168,76,0.3); }
+  to   { text-shadow: 0 0 40px rgba(201,168,76,0.8), 0 0 80px rgba(201,168,76,0.3); }
+}
+
+.hero-subtitle {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.hero-divider {
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 1.5rem auto;
+}
+
+/* ---------- Buttons ---------- */
+.btn-elden {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  padding: 0.7rem 2rem;
+  border-radius: var(--radius);
+  background: transparent;
+  transition: all var(--transition);
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-elden:hover {
+  background: rgba(201,168,76,0.1);
+  border-color: var(--gold);
+  color: var(--gold-light);
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(201,168,76,0.2);
+}
+
+.btn-elden-solid {
+  background: var(--gold);
+  color: var(--dark);
+  border-color: var(--gold);
+}
+.btn-elden-solid:hover {
+  background: var(--gold-light);
+  color: var(--dark);
+  border-color: var(--gold-light);
+}
+
+/* ---------- Cards ---------- */
+.card-elden {
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  height: 100%;
+}
+.card-elden:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-dim);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(201,168,76,0.05);
+}
+
+.card-elden .card-body { padding: 1.5rem; }
+.card-elden .card-title {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+.card-elden .card-subtitle {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+.card-elden .card-text { font-size: 0.95rem; color: var(--text-main); }
+
+/* Boss image */
+.boss-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: top center;
+  filter: grayscale(20%) sepia(10%);
+  transition: filter var(--transition);
+}
+.card-elden:hover .boss-image { filter: grayscale(0%) sepia(0%); }
+
+/* Difficulty stars/bar */
+.difficulty-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+.difficulty-fill {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+  transition: width 0.8s ease;
+}
+.difficulty-bg {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--dark-border);
+  flex: 1;
+  overflow: hidden;
+}
+.difficulty-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  color: var(--gold);
+  min-width: 2rem;
+  text-align: right;
+}
+
+/* ---------- Section Containers ---------- */
+.section-elden {
+  padding: 4rem 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header .ornament {
+  color: var(--gold-dim);
+  font-size: 1.5rem;
+  opacity: 0.5;
+}
+
+/* ---------- Lore Timeline ---------- */
+.lore-timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+.lore-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--gold-dim), transparent);
+}
+
+.lore-entry {
+  position: relative;
+  padding: 1.5rem 1.5rem 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius);
+  transition: border-color var(--transition);
+}
+.lore-entry:hover { border-color: var(--gold-dim); }
+
+.lore-entry::before {
+  content: '✦';
+  position: absolute;
+  left: -1.85rem;
+  top: 1.6rem;
+  color: var(--gold);
+  font-size: 0.7rem;
+}
+
+.lore-era {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 0.3rem;
+}
+
+/* ---------- Badge ---------- */
+.badge-elden {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 2px;
+}
+.badge-required { background: rgba(139,32,32,0.3); color: #c07070; border: 1px solid #5a2020; }
+.badge-optional { background: rgba(107,45,107,0.3); color: #b080b0; border: 1px solid #4a2050; }
+
+/* ---------- Quote Block ---------- */
+.quote-block {
+  border-left: 2px solid var(--gold-dim);
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  background: rgba(201,168,76,0.03);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+  color: var(--text-muted);
+}
+.quote-block cite {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-style: normal;
+  color: var(--gold-dim);
+  font-family: 'Cinzel', serif;
+}
+
+/* ---------- Detail Page ---------- */
+.detail-header {
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--dark-border);
+  margin-bottom: 2.5rem;
+}
+.detail-stat {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+.detail-stat-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  min-width: 100px;
+}
+.detail-stat-value { color: var(--text-main); }
+
+/* ---------- API Data Table ---------- */
+.table-elden {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.table-elden th {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  border-bottom: 1px solid var(--dark-border);
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+.table-elden td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(46,40,32,0.5);
+  vertical-align: top;
+  color: var(--text-main);
+}
+.table-elden tr:hover td { background: rgba(201,168,76,0.03); }
+
+/* ---------- Footer ---------- */
+footer {
+  border-top: 1px solid var(--dark-border);
+  padding: 2rem 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Audio Player ---------- */
+.audio-player {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(10,8,6,0.92);
+  border: 1px solid var(--dark-border);
+  border-radius: 2rem;
+  padding: 0.5rem 1rem 0.5rem 0.7rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  transition: border-color var(--transition);
+}
+.audio-player:hover { border-color: var(--gold-dim); }
+
+.audio-btn {
+  background: none;
+  border: 1px solid var(--gold-dim);
+  color: var(--gold);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: all var(--transition);
+  padding: 0;
+}
+.audio-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+
+.audio-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  max-width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.volume-slider {
+  -webkit-appearance: none;
+  width: 70px;
+  height: 2px;
+  background: var(--dark-border);
+  border-radius: 1px;
+  outline: none;
+  cursor: pointer;
+}
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+}
+
+/* ---------- Ranking Chart Bars ---------- */
+.rank-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius);
+  transition: border-color var(--transition);
+}
+.rank-row:hover { border-color: var(--gold-dim); }
+.rank-number {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  color: var(--gold-dim);
+  min-width: 2rem;
+  text-align: center;
+}
+.rank-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  color: var(--gold);
+  min-width: 220px;
+}
+.rank-bar-wrap { flex: 1; background: var(--dark-border); border-radius: 2px; height: 6px; }
+.rank-bar {
+  height: 6px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+  transition: width 1s ease;
+}
+.rank-score {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  color: var(--gold);
+  min-width: 2rem;
+  text-align: right;
+}
+
+/* ---------- Animations & Scroll ---------- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .hero { min-height: 70vh; }
+  .rank-name { min-width: 120px; font-size: 0.75rem; }
+  .audio-player { bottom: 1rem; right: 1rem; padding: 0.4rem 0.8rem 0.4rem 0.5rem; }
+  .volume-slider { width: 50px; }
+}
+
+/* ---------- Utility ---------- */
+.text-gold { color: var(--gold) !important; }
+.text-muted-elden { color: var(--text-muted) !important; }
+.border-gold { border-color: var(--gold-dim) !important; }
+.bg-dark-card { background: var(--dark-card); }

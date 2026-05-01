@@ -1,0 +1,29 @@
+@model IEnumerable<EldenRingMVC.Models.LoreEntry>
+@{
+    ViewData["Title"] = "Categoria: " + ViewBag.Category;
+}
+
+<div class="container section-elden" style="max-width:800px;">
+    <div class="section-header">
+        <h1>@ViewBag.Category</h1>
+        <p class="text-muted-elden" style="font-style:italic; margin-top:0.5rem;">
+            Entrades de la categoria <em>@ViewBag.Category</em>
+        </p>
+        <a asp-action="Index" class="btn-elden mt-3" style="font-size:0.75rem;">← Tota la Història</a>
+    </div>
+
+    <div class="lore-timeline" role="list">
+        @foreach (var entry in Model)
+        {
+            <div class="lore-entry fade-in" role="listitem">
+                <p class="lore-era">@entry.Era</p>
+                <h2 style="font-size:1.1rem; margin-bottom:0.6rem;">@entry.Title</h2>
+                <p style="font-size:0.95rem;">@entry.Content</p>
+                <a asp-action="Details" asp-route-id="@entry.Id"
+                   class="btn-elden" style="display:inline-block; margin-top:0.8rem; font-size:0.72rem;">
+                    Llegir més →
+                </a>
+            </div>
+        }
+    </div>
+</div>

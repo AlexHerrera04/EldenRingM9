@@ -1,0 +1,41 @@
+@model IEnumerable<EldenRingMVC.Models.Boss>
+@{
+    ViewData["Title"] = "Rànquing de Dificultat";
+    int rank = 1;
+}
+
+<div class="container section-elden" style="max-width:780px;">
+    <div class="section-header">
+        <p class="ornament" aria-hidden="true">⊕</p>
+        <h1>Rànquing de Dificultat</h1>
+        <p class="text-muted-elden" style="font-style:italic; margin-top:0.5rem;">
+            Els bosses ordenats dels més difícils als menys temibles
+        </p>
+    </div>
+
+    <div role="list" aria-label="Rànquing de bosses per dificultat">
+        @foreach (var boss in Model)
+        {
+            <div class="rank-row fade-in" role="listitem" aria-label="Posició @rank: @boss.Name, dificultat @boss.Difficulty de 10">
+                <span class="rank-number" aria-hidden="true">#@rank</span>
+                <span class="rank-name">
+                    <a asp-action="Details" asp-route-id="@boss.Id"
+                       style="text-decoration:none; color:inherit;">
+                        @boss.Name
+                    </a>
+                </span>
+                <div class="rank-bar-wrap" aria-hidden="true">
+                    <div class="rank-bar"
+                         data-width="@(boss.Difficulty * 10)"
+                         style="width:0%"></div>
+                </div>
+                <span class="rank-score">@boss.Difficulty<small style="font-size:0.65rem; opacity:0.5;">/10</small></span>
+            </div>
+            rank++;
+        }
+    </div>
+
+    <div class="text-center mt-4">
+        <a asp-action="Index" class="btn-elden">← Tornar als Bosses</a>
+    </div>
+</div>
