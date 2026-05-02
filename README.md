@@ -3,7 +3,7 @@ App desplegada en aquest link -> http://herrera14-001-site1.qtempurl.com/  **S'h
 
 **Elden Ring Wiki — MP09 Projecte Final**
 **Justificació i Motivació**
-Elden Ring és un dels videojocs més aclamats dels últims anys, desenvolupat per FromSoftware amb la col·laboració de George R. R. Martin. La seva profunditat de lore, la complexitat dels seus bosses i la seva comunitat activa el fan un tema ideal per a un projecte web. L'objectiu és crear una wiki interactiva que permeti explorar els bosses més poderosos del joc i la història de les Terres Entremig, combinant dades d'una API pública real amb una base de dades local.
+L'Elden Ring és l'últim joc que vaig jugar abans de que les pràctiques i les classes em treiessin gran part del meu temps i s'ha convertit en el meu videojoc preferit. És per això que li he volgut donar un petit homenatge fent una web informativa sobre el seu 'lore' i els seus 'bosses' més forts que tant em van costar entendre i vèncer.
 
 **Esquema d'Arquitectura**
 L'aplicació segueix l'arquitectura MVC de .NET Core. La capa de Model conté les entitats Boss i LoreEntry, gestionades amb Entity Framework Core sobre SQLite, i els models per deserialitzar les respostes de l'API externa amb Newtonsoft.Json. La capa de Controlador conté tres controladors: HomeController, BossController i LoreController, cadascun amb múltiples accions que gestionen les consultes a la BD i les crides a l'API. La capa de Vista conté totes les pàgines Razor, que reben les dades dels controladors i les mostren a l'usuari amb HTML, CSS i JavaScript.
